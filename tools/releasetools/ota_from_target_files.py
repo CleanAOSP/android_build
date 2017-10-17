@@ -680,9 +680,18 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   # Dump fingerprints
   #script.Print("Target: %s" % CalculateFingerprint(
   #    oem_props, oem_dict, OPTIONS.info_dict))
-  script.Print("********************")
-  script.Print("**   Clean AOSP   **")
-  script.Print("********************")
+  script.Print("_____________________________________")
+  script.Print("  __      __                         ")
+  script.Print(" /   |   |_   /\  |\ |               ")
+  script.Print(" \__ |__ |__ /--\ | \|               ")
+  script.Print("       __   __  __                   ")
+  script.Print("  /\  /  \ (_  |__)                  ")
+  script.Print(" /--\ \__/ __) |                     ")
+  script.Print("         ___          __ Created By  ")
+  script.Print(" android   /    /|     _)  joryb     ")
+  script.Print("  nougat  / .    |.   /__  bthorne79 ")
+  script.Print("____________________________________ ")
+
 
   script.AppendExtra("ifelse(is_mounted(\"/system\"), unmount(\"/system\"));")
   device_specific.FullOTA_InstallBegin()
@@ -778,9 +787,9 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
     if block_based:
       script.Unmount("/system")
 
+  script.ShowProgress(0.5, 5)
   script.Print(" ")
-  script.Print("Flashing Kernel..")
-  script.ShowProgress(0.05, 5)
+  script.Print("Flashing Kracken Kernel..")
   script.WriteRawImage("/boot", "boot.img")
 
   script.ShowProgress(0.2, 10)
@@ -1800,10 +1809,10 @@ else
   if updating_boot:
     total_patch_size += target_boot.size
 
-  script.Print("Patching system files...")
+  script.Print("Installing system files...")
   so_far = system_diff.EmitPatches(script, total_patch_size, 0)
   if vendor_diff:
-    script.Print("Patching vendor files...")
+    script.Print("Installing vendor files...")
     so_far = vendor_diff.EmitPatches(script, total_patch_size, so_far)
 
   if not OPTIONS.two_step:
@@ -1811,7 +1820,7 @@ else
       # Produce the boot image by applying a patch to the current
       # contents of the boot partition, and write it back to the
       # partition.
-      script.Print("Patching boot image...")
+      script.Print("Installing boot image...")
       script.ApplyPatch("%s:%s:%d:%s:%d:%s"
                         % (boot_type, boot_device,
                            source_boot.size, source_boot.sha1,
